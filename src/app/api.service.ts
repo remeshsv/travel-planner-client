@@ -9,15 +9,28 @@ export interface RecommendationRequest {
   date: string;  // yyyy-mm-dd
 }
 
+export interface Activity {
+  time: string;
+  location: string;
+  description: string;
+  type: string;
+}
+
+export interface ItineraryDay {
+  day: number;
+  date: string;
+  activities: Activity[];
+}
+
 export interface RecommendationResponse {
-  text: string;
+  itinerary: ItineraryDay[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  private readonly baseUrl = '/api'; // update if you don't use proxy
+  private readonly baseUrl = 'http://localhost:8080/api';
 
   getRecommendations(payload: RecommendationRequest): Observable<RecommendationResponse> {
     console.log('API Service - getRecommendations called with payload:', payload);

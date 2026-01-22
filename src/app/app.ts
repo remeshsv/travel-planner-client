@@ -21,7 +21,7 @@ export class App {
   year = new Date().getFullYear();
   loading = false;
   error = '';
-  recommendations = '';
+  recommendations: any = null;
 
   places: string[] = [
     'Paris, France', 'London, United Kingdom', 'New York, USA', 'Tokyo, Japan',
@@ -40,7 +40,7 @@ export class App {
 
   onSubmit() {
     this.error = '';
-    this.recommendations = '';
+    this.recommendations = null;
 
     if (this.plannerForm.invalid) {
       this.error = 'Please fill in destination, traveler type, and date.';
@@ -54,7 +54,7 @@ export class App {
     this.api.getRecommendations(payload).subscribe({
       next: (res) => {
         this.loading = false;
-        this.recommendations = res.text;
+        this.recommendations = res;
       },
       error: (err) => {
         this.loading = false;

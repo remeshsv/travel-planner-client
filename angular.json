@@ -59,7 +59,8 @@
               "buildTarget": "travel-planner-client:build:production"
             },
             "development": {
-              "buildTarget": "travel-planner-client:build:development"
+              "buildTarget": "travel-planner-client:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

@@ -1,5 +1,3 @@
-
-
 <style>
   :host {
     --bright-blue: oklch(51.01% 0.274 263.83);
@@ -13,19 +11,15 @@
     --gray-700: oklch(36.98% 0.014 302.71);
     --gray-400: oklch(70.9% 0.015 304.04);
 
-    --red-to-pink-to-purple-vertical-gradient: linear-gradient(
-      180deg,
-      var(--orange-red) 0%,
-      var(--vivid-pink) 50%,
-      var(--electric-violet) 100%
-    );
+    --red-to-pink-to-purple-vertical-gradient: linear-gradient(180deg,
+        var(--orange-red) 0%,
+        var(--vivid-pink) 50%,
+        var(--electric-violet) 100%);
 
-    --red-to-pink-to-purple-horizontal-gradient: linear-gradient(
-      90deg,
-      var(--orange-red) 0%,
-      var(--vivid-pink) 50%,
-      var(--electric-violet) 100%
-    );
+    --red-to-pink-to-purple-horizontal-gradient: linear-gradient(90deg,
+        var(--orange-red) 0%,
+        var(--vivid-pink) 50%,
+        var(--electric-violet) 100%);
 
     --pill-accent: var(--bright-blue);
 
@@ -127,9 +121,11 @@
   .pill-group .pill:nth-child(6n + 1) {
     --pill-accent: var(--bright-blue);
   }
+
   .pill-group .pill:nth-child(6n + 2) {
     --pill-accent: var(--electric-violet);
   }
+
   .pill-group .pill:nth-child(6n + 3) {
     --pill-accent: var(--french-violet);
   }
@@ -175,7 +171,7 @@
   }
 </style>
 
-    
+
 <main class="min-h-screen flex flex-col items-center justify-start px-4 py-8
             [background:linear-gradient(135deg,_#32CD32_0%,_#9ACD32_50%,_#ADFF2F_100%)]">
 
@@ -185,8 +181,7 @@
       <span class="material-icons">travel_explore</span>
       Remesh's Super-Duper Travel Planner
     </div>
-    <button
-      class="flex items-center gap-1 rounded-full border border-lime-400 px-4 py-2
+    <button class="flex items-center gap-1 rounded-full border border-lime-400 px-4 py-2
              text-lime-800 hover:bg-lime-100 transition" aria-label="Sign in">
       <span class="material-icons text-sm">login</span>
       Sign In
@@ -207,30 +202,20 @@
     <form [formGroup]="plannerForm" (ngSubmit)="onSubmit()" class="space-y-4">
       <label class="block text-gray-800 text-lg">
         I would like to travel to
-        <input
-          type="text" formControlName="place" list="world-places"
-          placeholder="Type a city or country"
-          class="mx-2 w-64 rounded-lg border border-gray-300 px-3 py-2
-                 focus:outline-none focus:ring-2 focus:ring-lime-400"
-          aria-label="Destination" />
+        <input type="text" formControlName="place" list="world-places" placeholder="Type a city or country" class="mx-2 w-64 rounded-lg border border-gray-300 px-3 py-2
+                 focus:outline-none focus:ring-2 focus:ring-lime-400" aria-label="Destination" />
 
         as
-        <select
-          formControlName="people"
-          class="mx-2 w-48 rounded-lg border border-gray-300 px-3 py-2
-                 focus:outline-none focus:ring-2 focus:ring-lime-400"
-          aria-label="Traveler type">
+        <select formControlName="people" class="mx-2 w-48 rounded-lg border border-gray-300 px-3 py-2
+                 focus:outline-none focus:ring-2 focus:ring-lime-400" aria-label="Traveler type">
           <option value="solo">a solo traveler</option>
           <option value="couple">a couple</option>
           <option value="family">family</option>
         </select>
 
         on
-        <input
-          type="date" formControlName="date"
-          class="mx-2 w-48 rounded-lg border border-gray-300 px-3 py-2
-                 focus:outline-none focus:ring-2 focus:ring-lime-400"
-          aria-label="Travel date" />
+        <input type="date" formControlName="date" class="mx-2 w-48 rounded-lg border border-gray-300 px-3 py-2
+                 focus:outline-none focus:ring-2 focus:ring-lime-400" aria-label="Travel date" />
       </label>
 
       <datalist id="world-places">
@@ -238,9 +223,7 @@
       </datalist>
 
       <div class="flex justify-end">
-        <button type="submit"
-          [disabled]="plannerForm.invalid || loading"
-          class="inline-flex items-center gap-2 rounded-full bg-lime-600 text-white
+        <button type="submit" [disabled]="plannerForm.invalid || loading" class="inline-flex items-center gap-2 rounded-full bg-lime-600 text-white
                  px-5 py-2 hover:bg-lime-700 transition disabled:opacity-60 disabled:cursor-not-allowed">
           <span class="material-icons">search</span>
           {{ loading ? 'Fetching ideas…' : 'Submit' }}
@@ -250,10 +233,61 @@
 
     <p *ngIf="error" class="mt-4 text-red-600">{{ error }}</p>
 
-    <div *ngIf="recommendations" class="mt-6 bg-lime-50 border border-lime-100 rounded-xl p-4">
-      <h2 class="text-xl font-semibold text-lime-800 mb-2">Recommendations</h2>
-      <p class="whitespace-pre-line text-gray-800">{{ recommendations }}</p>
+    <div *ngIf="recommendations" class="mt-6 space-y-6">
+      <!-- Summary Card -->
+      <div class="bg-lime-50 border border-lime-100 rounded-xl p-6">
+        <h2 class="text-2xl font-bold text-lime-900 mb-3 flex items-center gap-2">
+          <span class="material-icons">summarize</span>
+          Trip Summary
+        </h2>
+        <p class="whitespace-pre-line text-gray-800 leading-relaxed">{{ recommendations.text }}</p>
+      </div>
+
+      <!-- Itinerary List -->
+      <div *ngIf="recommendations.itinerary?.length" class="space-y-4">
+        <h2 class="text-2xl font-bold text-lime-900 mb-4 px-2 flex items-center gap-2">
+          <span class="material-icons">event_note</span>
+          Daily Itinerary
+        </h2>
+
+        <div *ngFor="let day of recommendations.itinerary"
+          class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+          <div class="bg-lime-600 px-6 py-3 flex justify-between items-center text-white">
+            <span class="text-lg font-bold">Day {{ day.day }}</span>
+            <span class="text-sm font-medium">{{ day.date }}</span>
+          </div>
+
+          <div class="p-6 space-y-6">
+            <div *ngFor="let act of day.activities; let last = last" class="flex gap-4 group">
+              <div class="flex flex-col items-center">
+                <div
+                  class="w-10 h-10 rounded-full bg-lime-100 flex items-center justify-center text-lime-700 transition-colors">
+                  <span class="material-icons text-xl">
+                    {{
+                    act.type?.toLowerCase().includes('flight') ? 'flight' :
+                    act.type?.toLowerCase().includes('hotel') ? 'hotel' :
+                    act.type?.toLowerCase().includes('food') ? 'restaurant' :
+                    act.type?.toLowerCase().includes('meal') ? 'restaurant' :
+                    'place'
+                    }}
+                  </span>
+                </div>
+                <div *ngIf="!last" class="w-0.5 h-full bg-lime-100 mt-2"></div>
+              </div>
+
+              <div class="flex-1" [class.pb-6]="!last">
+                <div class="flex justify-between items-start mb-1">
+                  <h3 class="font-bold text-gray-900 text-lg">{{ act.location }}</h3>
+                  <span class="text-sm font-medium text-lime-700 bg-lime-50 px-2 py-0.5 rounded">{{ act.time }}</span>
+                </div>
+                <p class="text-gray-600">{{ act.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
   </section>
 
   <footer class="mt-6 text-gray-700">
